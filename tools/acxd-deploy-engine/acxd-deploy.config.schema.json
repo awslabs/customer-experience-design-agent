@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "acxd-deploy.config.json",
+  "description": "The ONLY orchestration input the harness authors. Declarative \u2014 points the deterministic deploy engine at the resource JSON files and flow files. The engine provisions workspace \u2192 resources \u2192 flows \u2192 application; Build + Deploy are a manual console step by the ACXD engineer (not automated).",
+  "type": "object",
+  "required": [
+    "project",
+    "workspace",
+    "application",
+    "resources",
+    "flows"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "camelCase project id, e.g. insuranceQuotePoc"
+    },
+    "workspace": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "application": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "defaultFlows": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Default-behaviour flows: role \u2192 target flowId (string). `welcome` is REQUIRED once the app has attached flows \u2014 the API rejects an app with flows but no welcome default [VERIFIED]. The engine wraps each as the SDK { flowId } shape.",
+          "properties": {
+            "welcome": {
+              "type": "string"
+            },
+            "fallback": {
+              "type": "string"
+            },
+            "unknown": {
+              "type": "string"
+            },
+            "escalation": {
+              "type": "string"
+            },
+            "frustration": {
+              "type": "string"
+            },
+            "help": {
+              "type": "string"
+            },
+            "repeat": {
+              "type": "string"
+            },
+            "resume": {
+              "type": "string"
+            }
+          }
+        },
+        "guardrails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Guardrail NAMES to attach to the application (resolved to ids and written to settings.guardrails). Each must match a guardrail authored in resources.guardrails."
+        }
+      },
+      "description": "ApplicationSettings are built from .env ACXD_APP_* vars at runtime \u2014 not here."
+    },
+    "settleMs": {
+      "type": "integer",
+      "default": 2000,
+      "description": "Settle delay after each synchronous create / between resource types."
+    },
+    "resources": {
+      "type": "object",
+      "required": [
+        "contextVariables",
+        "slotTypes",
+        "secrets",
+        "analyticsTags",
+        "dataRequests",
+        "knowledgeBases"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "contextVariables": {
+          "type": "string"
+        },
+        "slotTypes": {
+          "type": "string"
+        },
+        "secrets": {
+          "type": "string"
+        },
+        "analyticsTags": {
+          "type": "string"
+        },
+        "dataRequests": {
+          "type": "string"
+        },
+        "knowledgeBases": {
+          "type": "string"
+        },
+        "guardrails": {
+          "type": "string",
+          "description": "Path to the guardrails resource file (optional)."
+        }
+      },
+      "description": "Each value is a path to a declarative JSON file the harness authored."
+    },
+    "flows": {
+      "type": "object",
+      "required": [
+        "dir",
+        "order"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "dir": {
+          "type": "string"
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "flowIds in creation order \u2014 Redirect-target flows FIRST."
+        }
+      }
+    }
+  }
+}

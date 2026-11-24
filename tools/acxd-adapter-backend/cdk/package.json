@@ -1,0 +1,28 @@
+{
+  "name": "acxd-adapter-integration",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "description": "ACXD backend CDK stack — API Gateway, stateless adapter Lambda(s), CloudWatch, Connect integration (data store only if justified)",
+  "scripts": {
+    "bootstrap": "cdk bootstrap",
+    "build": "tsc",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy",
+    "diff": "cdk diff"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.100.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.100.0",
+    "cdk-nag": "^2.28.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true
+  }
+}

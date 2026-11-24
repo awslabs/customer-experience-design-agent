@@ -1,0 +1,22 @@
+{
+  "name": "acxd",
+  "version": "0.1.0",
+  "description": "Customer Experience (CX) Design Agent for Amazon Connect Agentic CX Designer (ACXD). Takes a business process through guided discovery, design, build and deployment of a conversational AI solution on Amazon Connect. Adds CX discovery, platform configuration, user stories, flow design, backend design and build, resource creation, flow authoring with systems integration tests, and deployment stages. Ships the CX Design Agent persona, a curated knowledge base, five engagement scopes (acxd-platform, acxd-usecase, acxd-platform-poc, acxd-poc, acxd-enhancement), and two deterministic build mechanisms the agent authors for: the Flow DSL (correct-by-construction flows from declarative FlowSpecs) and the ACXD deploy engine (workspace, resources, flows and application from declarative JSON).",
+  "author": {
+    "name": "AWS Applied AI Velocity Team"
+  },
+  "dependencies": [
+    "core"
+  ],
+  "aidlc": {
+    "contributes": {
+      "stages": "stages/",
+      "overlays": "contributions/",
+      "agents": "agents/",
+      "scopes": "scopes/",
+      "knowledge": "knowledge/",
+      "sensors": "sensors/",
+      "tools": "tools/"
+    }
+  }
+}

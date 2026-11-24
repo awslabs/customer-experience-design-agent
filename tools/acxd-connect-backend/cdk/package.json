@@ -1,0 +1,29 @@
+{
+  "name": "acxd-connect-integration",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "description": "ACXD Amazon Connect integration CDK \u2014 contact flow via Agentic CX block, escalation queue, routing profile, wired into an existing Connect instance",
+  "scripts": {
+    "bootstrap": "cdk bootstrap",
+    "build": "tsc",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy",
+    "diff": "cdk diff"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.100.0",
+    "constructs": "^10.0.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.100.0",
+    "cdk-nag": "^2.28.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true
+  }
+}

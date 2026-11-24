@@ -1,0 +1,60 @@
+# EXAMPLE computed-operation override. Rename to `getQuote.py` (drop `.example`) to activate,
+# or use it as a template for your own computed operation. Plain-lookup operations need NO file here.
+#
+# ⚠️ THE FIELD NAMES BELOW ARE ILLUSTRATIVE — they are NOT a contract to copy.
+# The keys this op RETURNS (e.g. `basic`, `customerPlus`, `finalPricing`) and the params it READS
+# (e.g. `productLine`, `tier`) must EXACTLY match your own data request's responseSchema / URL params
+# for THIS operation. ACXD maps response fields to `{dataRequest.field}` by EXACT name — if your op
+# returns `finalPricing` but the flow reads `{applyDiscounts.finalPrice}`, the reference resolves BLANK
+# (no error, just empty). Before using this as a template: open your `resources/data-requests.json`,
+# read the operation's responseSchema field names, and return EXACTLY those names.
+#
+# Contract: expose `handle(params, data) -> dict`.
+#   params : dict of request values from the JSON body (preferred) merged with the URL query string. Query
+#            values are strings; body values keep their JSON types (nested objects/arrays included).
+#   data   : the parsed data/<operation>.json for this operation.
+#   return : a flat dict of top-level fields (the ACXD data-request response — no nesting the flow
+#            can't read). Raising signals a real system error (the core returns HTTP 500).
+#
+# The handler core exposes helpers you may import: key(), money(), truthy().
+# This worked example computes an insurance quote (tier pricing + discount math + money formatting)
+# from a per-product-line record in data/getQuote.json.
+from handler import key, money, truthy
+
+
+def handle(params, data):
+    line = (params.get("productLine") or "").strip().lower()
+    base = data.get(line, data.get("_default", {}))
+    if not base.get("found", False):
+        return {"success": False, "reason": base.get("reason", "unratable product line")}
+
+    prices = {
+        "basic": base["basic"],
+        "customerPlus": base["customerPlus"],
+        "customerProtect": base["customerProtect"],
+    }
+    tier = (params.get("tier") or "").strip()
+    selected = tier if tier in prices else "customerPlus"
+    gross = prices[selected]
+
+    applied, pct = [], 0
+    if key(params.get("customerId")):
+        pct += 10
+        applied.append("10% loyalty")
+    if truthy(params.get("multiPolicy")):
+        pct += 5
+        applied.append("5% multi-policy")
+    if truthy(params.get("upliftEligible")):
+        pct += 5
+        applied.append("5% coverage uplift")
+    final = round(gross * (1 - pct / 100.0), 2)
+
+    # NOTE: these return keys are illustrative — rename every one to match your data request's responseSchema.
+    return {
+        "quoteRef": base["quoteRef"],
+        "basic": prices["basic"], "basicFormatted": money(prices["basic"]),
+        "customerPlus": prices["customerPlus"], "customerPlusFormatted": money(prices["customerPlus"]),
+        "customerProtect": prices["customerProtect"], "customerProtectFormatted": money(prices["customerProtect"]),
+        "finalPricing": final, "finalPricingFormatted": money(final),
+        "discountsAppliedText": " + ".join(applied) if applied else "no additional discounts",
+    }

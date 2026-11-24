@@ -1,0 +1,39 @@
+{
+  "project": "{{PROJECT_ID_CAMELCASE}}",
+  "workspace": {
+    "name": "{{PROJECT_ID_CAMELCASE}}Workspace",
+    "tags": [
+      "{{OPTIONAL_TAG}}"
+    ]
+  },
+  "application": {
+    "name": "{{PROJECT_ID_CAMELCASE}}App",
+    "description": "{{APP_DESCRIPTION}}",
+    "defaultFlows": {
+      "welcome": "{{WELCOME_FLOW_ID}}",
+      "fallback": "{{FALLBACK_FLOW_ID}}",
+      "unknown": "{{UNKNOWN_FLOW_ID}}",
+      "escalation": "{{ESCALATION_FLOW_ID}}"
+    },
+    "guardrails": [
+      "{{GUARDRAIL_NAME}}"
+    ]
+  },
+  "settleMs": 2000,
+  "resources": {
+    "contextVariables": "resources/context-vars.json",
+    "slotTypes": "resources/slot-types.json",
+    "secrets": "resources/secrets.json",
+    "analyticsTags": "resources/analytics-tags.json",
+    "dataRequests": "resources/data-requests.json",
+    "knowledgeBases": "resources/knowledge-bases.json",
+    "guardrails": "resources/guardrails.json"
+  },
+  "flows": {
+    "dir": "flows",
+    "order": [
+      "{{COMPONENT_FLOW_ID_FIRST}}",
+      "{{PARENT_FLOW_ID_LAST}}"
+    ]
+  }
+}

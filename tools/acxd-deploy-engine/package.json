@@ -1,0 +1,28 @@
+{
+  "name": "acxd-deploy-engine",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic ACXD deployment engine — consumes declarative JSON + .env, creates all ACXD resources, builds and deploys. Shipped with the acxd AI-DLC plugin.",
+  "scripts": {
+    "deploy": "tsx main.ts",
+    "test": "node --import tsx --test ../../tests/acxd-deploy-engine/*.test.ts",
+    "workspace": "tsx steps/ensure-workspace.ts",
+    "application": "tsx steps/ensure-application.ts"
+  },
+  "dependencies": {
+    "amazon-connect-acxd-sdk": "^0.2.0",
+    "dotenv": "^16.4.5",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/node": "^22.5.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true
+  }
+}

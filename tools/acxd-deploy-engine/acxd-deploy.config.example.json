@@ -1,0 +1,42 @@
+{
+  "project": "northwindEnergyBilling",
+  "workspace": {
+    "name": "northwindEnergyBillingWorkspace",
+    "tags": [
+      "acxd",
+      "energy",
+      "billing"
+    ]
+  },
+  "application": {
+    "name": "northwindEnergyBillingApp",
+    "description": "ACXD application for Northwind Energy billing | Flows: 10 | Env: dev | Owner: Platform Team",
+    "defaultFlows": {
+      "welcome": "billingMain",
+      "fallback": "billingMain",
+      "unknown": "billingMain",
+      "escalation": "billingEscalation"
+    },
+    "guardrails": [
+      "inputSafety",
+      "outputPrivacy"
+    ]
+  },
+  "settleMs": 2000,
+  "resources": {
+    "contextVariables": "resources/context-vars.json",
+    "slotTypes": "resources/slot-types.json",
+    "secrets": "resources/secrets.json",
+    "analyticsTags": "resources/analytics-tags.json",
+    "dataRequests": "resources/data-requests.json",
+    "knowledgeBases": "resources/knowledge-bases.json",
+    "guardrails": "resources/guardrails.json"
+  },
+  "flows": {
+    "dir": "flows",
+    "order": [
+      "billingEscalation",
+      "billingMain"
+    ]
+  }
+}
