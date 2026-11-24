@@ -1,0 +1,25 @@
+{
+  "name": "acxd-mock-backend-cdk",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "description": "ACXD deployed-mock backend CDK app (fixed). CommonJS \u2014 __dirname is used for the Lambda asset path, so do NOT add \"type\": \"module\".",
+  "scripts": {
+    "synth": "cdk synth",
+    "deploy": "cdk deploy"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.100.0",
+    "constructs": "^10.0.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.100.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true
+  }
+}

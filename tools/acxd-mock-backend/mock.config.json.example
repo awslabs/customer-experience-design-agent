@@ -1,0 +1,6 @@
+{
+  "_comment": "Optional. Copy to mock.config.json only to change these defaults. Project name, region and environment come from the distribution-root .env; the APIs are the folders under apis/.",
+  "stageName": "dev",
+  "memoryMb": 128,
+  "timeoutSeconds": 10
+}
