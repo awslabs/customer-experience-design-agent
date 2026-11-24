@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "amazon-connect-acxd-sdk": "^0.2.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^18.0.10",
     "yaml": "^2.5.0"
   },
   "devDependencies": {
