@@ -187,7 +187,10 @@ export function userChoice(opts: UserChoiceOpts): UserChoiceResult {
 // data request at runtime (prose alone cannot; the model only has ASSIGNED tools). [CONSOLE-VERIFIED]
 export type GenerativeModelType =
   | 'amazon-nova-micro' | 'amazon-nova-2-lite'
-  | 'anthropic.claude-haiku-4-5' | 'anthropic.claude-sonnet-5';
+  | 'anthropic.claude-haiku-4-5' | 'anthropic.claude-haiku-5-5'
+  | 'anthropic.claude-sonnet-5' | 'anthropic.claude-sonnet-5-5';
+// split nodes take a smaller, separate set (SDK SplitModelType).
+export type SplitModelType = 'amazon-nova-2-lite' | 'anthropic.claude-haiku-4-5' | 'anthropic.claude-sonnet-5';
 
 export interface GenerativeJourneyExit {
   name?: string;                    // optional label; the wire shape keeps name:"" and routes by index
@@ -208,7 +211,7 @@ export interface GenerativeJourneyOpts {
   // (the "Exit when complete" switch — the deterministic capture-complete exit). CONSOLE-VERIFIED.
   dataCapture?: GenerativeJourneyDataCapture[];
   // LLM params (console defaults shown). CONSOLE-VERIFIED.
-  model?: string;                   // default 'anthropic.claude-sonnet-5'
+  model?: string;                   // default 'anthropic.claude-sonnet-5-5'
   maxTokens?: number;               // default 8192
   maxSteps?: number;                // default 10
   temperature?: number;             // default 0.7
@@ -274,7 +277,7 @@ export function generativeJourney(opts: GenerativeJourneyOpts): NodeResult {
   gj.maxSteps = opts.maxSteps ?? 10;
   gj.temperature = opts.temperature ?? 0.7;
   gj.enableZeroTurnMode = opts.enableZeroTurnMode ?? false;
-  gj.modelType = opts.model ?? 'anthropic.claude-sonnet-5';
+  gj.modelType = opts.model ?? 'anthropic.claude-sonnet-5-5';
   if (captures.length) {
     gj.dataCapture = {
       data: captures.map((c) => ({ required: c.required ?? true, type: 'slot', name: c.slotName })),
@@ -438,13 +441,13 @@ export function redirect(opts: RedirectOpts): NodeResult {
 }
 
 // ── split — branch on typed conditions ──────────────────────────────────────────────────────────────────────
-// metadata.split carries { modelType } (verified 'amazon-nova-2-lite'). Each branch is a named handle carrying
+// metadata.split carries { modelType } from SplitModelType (default the latest Haiku split allows). Each branch is a named handle carrying
 // its condition; plus a default (unconditional, empty-conditions) handle rendered last.
 export interface SplitBranch { name: string; condition: Condition; }
-export function split(opts: { name?: string; branches: SplitBranch[]; model?: GenerativeModelType; withDefault?: boolean }): NodeResult {
+export function split(opts: { name?: string; branches: SplitBranch[]; model?: SplitModelType; withDefault?: boolean }): NodeResult {
   const node: FlowNode = {
     nodeId: uuid(), type: 'split', childNodes: [], modalities: {}, messages: [],
-    metadata: { name: opts.name, stateModifications: [], split: { modelType: opts.model ?? 'amazon-nova-2-lite' } },
+    metadata: { name: opts.name, stateModifications: [], split: { modelType: opts.model ?? 'anthropic.claude-haiku-4-5' } },
   };
   const exits: ExitHandle[] = opts.branches.map((b) => new ExitHandle(b.name, 'value', [b.condition]));
   if (opts.withDefault !== false) exits.push(new ExitHandle('default', 'unconditional', []));

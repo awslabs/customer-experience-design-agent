@@ -14,7 +14,7 @@ None of these are bundled by this project.
 
 | Package | Locked version | License | Role | Declared in |
 |---|---|---|---|---|
-| `amazon-connect-acxd-sdk` | 0.2.0 | Apache-2.0 | runtime (ACXD SDK) | deploy engine |
+| `amazon-connect-acxd-sdk` | 0.5.0 | Apache-2.0 | runtime (ACXD SDK) | deploy engine |
 | `aws-cdk-lib` | 2.277.0 | Apache-2.0 | runtime (CDK constructs) | mock / connect / adapter CDK |
 | `constructs` | 10.8.1 | Apache-2.0 | runtime (CDK base) | mock / connect / adapter CDK |
 | `dotenv` | 16.6.1 | BSD-2-Clause | runtime (.env loading) | deploy engine, mock / connect CDK |

@@ -246,7 +246,7 @@ export function buildEscalation(p: EscalationParams): FlowDoc {
       name: 'Summarise for agent',
       producesLocal: 'escalationSummary',
       prompt: p.summaryPrompt,
-      model: p.model ?? 'anthropic.claude-sonnet-5',
+      model: p.model ?? 'anthropic.claude-haiku-5-5',
     }));
     const store = f.add(basicNode({
       name: 'Transfer message',

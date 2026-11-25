@@ -124,7 +124,7 @@ internet access to know the list because it ships with the SDK.
   and `tsc` reject unknown models.
 - **Agent reference:** `knowledge/acxd-platform-agent/acxd-sdk-idl.ts` (mirror of the same list).
 - **Presented to the user:** `stages/inception/acxd-platform-config.md` Step 2 (descriptions and the two
-  recommendations: reasoning/routing `anthropic.claude-sonnet-5`, data collection `anthropic.claude-haiku-4-5`).
+  recommendations: reasoning/routing `anthropic.claude-sonnet-5-5`, data collection `anthropic.claude-haiku-5-5`; split nodes default to `anthropic.claude-haiku-4-5`, the latest Haiku the split set allows).
 
 **When the SDK adds or removes a model:** bump the SDK in `tools/acxd-deploy-engine/package.json`, read the new
 enum from its Smithy model or `.d.ts`, update `nodes.ts` and `acxd-sdk-idl.ts`, then update the Platform Config

@@ -19,7 +19,7 @@ Before you install, check you have the following.
 
 | Dependency | Version | Why it is needed |
 |---|---|---|
-| **Node.js** | 22 LTS (minimum 20.x) | Runs the AWS CDK and the ACXD deploy engine (`npx tsx`) at deploy time. Includes `npm` / `npx`. |
+| **Node.js** | 26 LTS (minimum 22.x) | Runs the AWS CDK and the ACXD deploy engine (`npx tsx`) at deploy time. Includes `npm` / `npx`. |
 | **Git** | any recent version | Clones this repository. |
 | **AWS CLI** | v2 | Configures and verifies your AWS credentials (`aws sts get-caller-identity`); used by the deploy steps. |
 | **Python** | 3.12 | The agent generates its Word (`.docx`) documents with `python-docx` (installed below). 3.12 also matches the runtime of the mock integration backend (an AWS Lambda), so you can run or edit it locally. |

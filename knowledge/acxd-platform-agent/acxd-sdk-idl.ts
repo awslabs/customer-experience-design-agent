@@ -420,7 +420,7 @@ export interface FlowNodeMetadata {
   knowledgeBase?: KnowledgeBaseNodeConfig;
   loop?: LoopConfig;
   define?: DefineConfig;
-  split?: { modelName?: string };
+  split?: { modelType?: SplitModelType };
 }
 
 /** user_choice node config.
@@ -511,7 +511,10 @@ export interface FlowStateModification {
  *  "anthropic-haiku-4.5" — real-world testing accepts only these exact ids. */
 export type GenerativeModelType =
   | 'amazon-nova-micro' | 'amazon-nova-2-lite'
-  | 'anthropic.claude-haiku-4-5' | 'anthropic.claude-sonnet-5';
+  | 'anthropic.claude-haiku-4-5' | 'anthropic.claude-haiku-5-5'
+  | 'anthropic.claude-sonnet-5' | 'anthropic.claude-sonnet-5-5';
+// split nodes take a smaller, separate set (SDK SplitModelType).
+export type SplitModelType = 'amazon-nova-2-lite' | 'anthropic.claude-haiku-4-5' | 'anthropic.claude-sonnet-5';
 
 // ============================================================================================
 // VERIFIED EXIT-EDGE PATTERNS (build these in childNodes[].conditions[])

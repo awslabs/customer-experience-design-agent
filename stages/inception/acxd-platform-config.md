@@ -161,22 +161,24 @@ Based on the integration inventory from CX Discovery:
 >   list and split by task, because reasoning and data-collection work have different capability/latency needs.
 >   The supported models (the closed `GenerativeModelType` Smithy enum — the ONLY valid values; no internet
 >   lookup needed):
->   1. `amazon-nova-micro` — fastest, lowest cost; lightweight classification / simple capture.
->   2. `amazon-nova-2-lite` — fast, low cost; simple capture where cost matters most.
->   3. `anthropic.claude-haiku-4-5` — fast, strong instruction-following at low latency; good default for data collection.
->   4. `anthropic.claude-sonnet-5` — highest capability/reasoning; higher latency and cost.
+>   1. `anthropic.claude-sonnet-5-5` — highest capability/reasoning; higher latency and cost.
+>   2. `anthropic.claude-sonnet-5` — previous Sonnet; strong reasoning.
+>   3. `anthropic.claude-haiku-5-5` — fast, strong instruction-following at low latency; good default for data collection.
+>   4. `anthropic.claude-haiku-4-5` — previous Haiku; fast and low latency.
+>   5. `amazon-nova-2-lite` — low cost; weaker output quality than the Claude models.
+>   6. `amazon-nova-micro` — lowest cost; simple classification only.
 >
 >   **Q1 — Reasoning & routing model** (drives **Generative Journey** and **Multimodal / Live Sync** nodes):
 >   the agentic "thinking" work — multi-step reasoning, tool selection, open-ended understanding. Capability
->   matters more than latency here. *Recommended: `anthropic.claude-sonnet-5`* (or `claude-haiku-4-5` if
+>   matters more than latency here. *Recommended: `anthropic.claude-sonnet-5-5`* (or `claude-haiku-5-5` if
 >   latency-sensitive on voice).
 >   **Q2 — Data-collection model** (drives **Generative Text** nodes): single-shot generation — summaries,
 >   short rewrites, field extraction. Latency-sensitive, no multi-step reasoning. *Recommended:
->   `anthropic.claude-haiku-4-5`* (or `amazon-nova-2-lite` where cost matters more than output quality).
+>   `anthropic.claude-haiku-5-5`*.
 >
 >   Record both as the project model defaults. The per-node mapping (GJ + Multimodal → the Q1 model; Generative
 >   Text → the Q2 model) is applied automatically at flow authoring; the user confirms or overrides per node in
->   Flow Design Step 9c.
+>   Flow Design Step 9c. Split nodes use their own smaller SDK set and default to `anthropic.claude-haiku-4-5`.
 - **Amazon Connect integration** — plan the single Connect integration stack (contact flow via the Agentic CX block from `mainflow.json`, escalation queue, routing profile). The Agentic CX block references the ACXD Workspace/Application/Alias — there is no Lex bot to provision.
 - **Channel configuration** — voice (Connect contact flows), chat (widget, messaging), Live Sync (Voice+)
 - **Escalation channels** — configure the escalation path (Connect queue, external transfer)
